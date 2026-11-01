@@ -21,20 +21,11 @@ public class Server {
         try {
             ServerSocket serversocket = new ServerSocket(portNumber);
             while (true) { 
+
                 Socket clientSocket = serversocket.accept();
-                
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-           
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) { 
-                    try {
-                        double result = calculator.evaluate(inputLine);
-                        out.println(inputLine + " = " + result);
-                    } catch (Exception e) {
-                        out.println("Error in expression: " + e.getMessage());
-                    }
-                }
+                ClientThread ct = new ClientThread(clientSocket, calculator);
+                ct.start();
+
             }
         } catch (IOException e) {
             System.out.println("Exception occured on port" + portNumber);
