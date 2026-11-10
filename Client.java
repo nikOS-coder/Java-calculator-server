@@ -6,6 +6,7 @@ public class Client {
         String hostName = "127.0.0.1";
         int portNumber = 8888;
 
+        // Parse command line arguments for custom host and port configuration
         if (args.length == 0) {
             System.out.println("usage -> <./executable> <port number> <ip adress>");
             System.out.println("Now using default port number <8888> and ip adress <127.0.0.1>");
@@ -18,6 +19,7 @@ public class Client {
             System.out.println("usage -> <./executable> <port number> <ip adress>");
         }
 
+        // Establish connection to the server and handle standard input/output streams
         try ( Socket calcSocket = new Socket(hostName, portNumber);
               PrintWriter out = new PrintWriter(calcSocket.getOutputStream(), true);
               BufferedReader in = new BufferedReader(new InputStreamReader(calcSocket.getInputStream()));
@@ -26,6 +28,8 @@ public class Client {
             String inputLine;
             System.out.println("Welcome to server calculator");
             System.out.println("Type any mathematical operation");
+            
+            // Loop to send user input expressions and print server responses
             while ((inputLine = stdin.readLine()) != null) { 
                 out.println(inputLine);
                 System.out.println(in.readLine());

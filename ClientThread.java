@@ -5,6 +5,7 @@ public class ClientThread extends Thread {
     Socket clientSocket;
     Calculator calculator;
 
+    // Constructor to initialize socket and shared calculator instance
     public ClientThread(Socket clientSocket, Calculator calculator) {
         this.clientSocket = clientSocket;
         this.calculator = calculator;
@@ -12,11 +13,12 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() { 
-        try (   
+        try ( 
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         ) {
             String inputLine;
+            // Read incoming expressions, evaluate them, and send back the results
             while ((inputLine = in.readLine()) != null) { 
                 try {
                     double result = calculator.evaluate(inputLine);

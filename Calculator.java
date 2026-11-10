@@ -3,12 +3,14 @@ import java.util.Stack;
 public class Calculator {
     public Calculator() {}
 
+    // Define operator precedence rules for arithmetic evaluation
     private static int precedence(char ops) {
         if (ops == '*' || ops == '/') return 2;
         if (ops == '+' || ops == '-') return 1;
         return 0;
     }
 
+    // Apply a basic mathematical operation to two operands
     private static double applyOperation(char ops, double b, double a) {
         switch (ops) {
             case '+': return (a + b);
@@ -20,6 +22,7 @@ public class Calculator {
         return 0;
     }
 
+    // Core method to parse and evaluate infix mathematical expression strings using Stacks
     public double evaluate (String operation) {
         char[] tokens = operation.toCharArray();
 
@@ -29,6 +32,7 @@ public class Calculator {
         for (int i = 0; i < tokens.length; i++) {
             if (tokens[i] == ' ') continue;
 
+            // Handle multi-digit numbers and floating-point values
             if (Character.isDigit(tokens[i])) {
                 StringBuilder sb = new StringBuilder();
                 while (i < tokens.length && (Character.isDigit(tokens[i]) || tokens[i] == '.')) {
@@ -42,7 +46,7 @@ public class Calculator {
             }
             else if (tokens[i] == ')') {
                 while (!ops.empty() && ops.peek() != '(') { 
-                    values.push(applyOperation(ops.pop(), values.pop(), values.pop()));                     
+                    values.push(applyOperation(ops.pop(), values.pop(), values.pop()));                
                 }
                 ops.pop();
             }
@@ -54,6 +58,7 @@ public class Calculator {
             }
         }    
 
+        // Process remaining operators in the stack
         while (!ops.empty()) {
             values.push(applyOperation(ops.pop(), values.pop(), values.pop()));
         }   
