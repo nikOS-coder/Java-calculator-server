@@ -26,7 +26,8 @@ public class Server {
             while (true) { 
                 Socket clientSocket = serversocket.accept();
                 ClientThread ct = new ClientThread(clientSocket, calculator);
-                ct.start(); // Spawn worker thread for the connected client
+                Thread t1 = new Thread(ct);
+                t1.start(); // Spawn worker thread for the connected client
             }
         } catch (IOException e) {
             System.out.println("Exception occured on port" + portNumber);

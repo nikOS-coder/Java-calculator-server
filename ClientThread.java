@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-public class ClientThread extends Thread {
+public class ClientThread implements Runnable {
     Socket clientSocket;
     Calculator calculator;
 
